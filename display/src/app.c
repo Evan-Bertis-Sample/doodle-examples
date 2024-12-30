@@ -1,27 +1,46 @@
+#include <doodle/core/doodle_app.h>
+#include <doodle/core/modules/doodle_renderer.h>
+#include <doodle/core/util/doodle_math.h>
 #include <stdio.h>
 
-#include <doodle/core/doodle_app.h>
-#include <doodle/core/util/doodle_math.h>
+static void display_setup(doodle_app_t *app) {
+    doodle_module_renderer_t *renderer = (doodle_module_renderer_t *)doodle_app_get_module(app, DOODLE_MODULE_TYPE_RENDERER);
 
-static void blank_setup(void) {
-    printf("setup\n");
+    if (renderer) {
+        doodle_color_t color = (doodle_color_t){.value = 0xFF0000FF};
+        renderer->clear(renderer, color);
+    }
 }
 
-static void blank_loop(void) {
-    printf("loop\n");
+static void display_loop(doodle_app_t *app) {
+    doodle_module_renderer_t *renderer = (doodle_module_renderer_t *)doodle_app_get_module(app, DOODLE_MODULE_TYPE_RENDERER);
+
+    if (renderer) {
+        doodle_color_t color = (doodle_color_t){.value = 0x00FF00FF};
+        renderer->draw_pixel(renderer, 320, 240, color);
+    }
 }
 
-static void blank_teardown(void) {
+static void display_teardown(doodle_app_t *app) {
     printf("teardown\n");
 }
 
 doodle_app_desc_t doodle_main(int32_t argc, char *argv[]) {
+    void *module_configs[DOODLE_MODULE_TYPE_COUNT] = {0};
+
+    doodle_module_renderer_config_t *renderer_config = malloc(sizeof(doodle_module_renderer_config_t));
+    *renderer_config = (doodle_module_renderer_config_t){
+        .width = 640,
+        .height = 480,
+    };
+    module_configs[DOODLE_MODULE_TYPE_RENDERER] = renderer_config;
+
     doodle_app_desc_t desc = {
         .name = "blank",
-        .display_size = doodle_vec2_make(800.0f, 600.0f),
-        .setup = blank_setup,
-        .loop = blank_loop,
-        .teardown = blank_teardown,
+        .module_configs = module_configs,
+        .setup = display_setup,
+        .loop = display_loop,
+        .teardown = display_teardown,
     };
     return desc;
-}   
+}
