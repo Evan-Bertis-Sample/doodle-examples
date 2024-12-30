@@ -6,15 +6,11 @@
 # PROJECT_SOURCE_DIR
 
 function(build_project)
-    message(STATUS "Building blank example")
-    # find all of the .c files in this directory,
-    # they will be compiled into the blank executable
-
-    message(STATUS "Adding app.c to the project, using path ${DOODLE_PROJECT_ROOT_DIR}/src.app.c")
-
     # link blank.c to PROJECT_NAME executable, which has already been defined
     target_sources(${PROJECT_NAME} PRIVATE ${DOODLE_PROJECT_ROOT_DIR}/src/app.c)
 
     message(STATUS "Linking doodle library")
     target_link_libraries(${PROJECT_NAME} PRIVATE doodle)
+
+    set(CMAKE_BUILD_TYPE Debug) # set the build type to Debug
 endfunction()

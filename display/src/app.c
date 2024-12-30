@@ -27,24 +27,21 @@ static void display_teardown(doodle_app_t *app) {
 }
 
 doodle_app_desc_t doodle_main(int32_t argc, char *argv[]) {
-    void **module_configs = calloc(DOODLE_MODULE_TYPE_COUNT, sizeof(void *));
-
-    printf("main\n");
+    doodle_app_desc_t desc = {
+        .name = "blank",
+        .module_configs = {0},
+        .setup = display_setup,
+        .loop = display_loop,
+        .teardown = display_teardown,
+    };
 
     doodle_module_renderer_config_t *renderer_config = malloc(sizeof(doodle_module_renderer_config_t));
     *renderer_config = (doodle_module_renderer_config_t){
         .width = 640,
         .height = 480,
     };
-    module_configs[DOODLE_MODULE_TYPE_RENDERER] = renderer_config;
-
-    doodle_app_desc_t desc = {
-        .name = "blank",
-        .module_configs = module_configs,
-        .setup = display_setup,
-        .loop = display_loop,
-        .teardown = display_teardown,
-    };
+    printf("Renderer config address: %p\n", renderer_config);
+    desc.module_configs[DOODLE_MODULE_TYPE_RENDERER] = renderer_config;
 
     printf("main end\n");
     return desc;
