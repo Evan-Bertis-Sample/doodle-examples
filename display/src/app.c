@@ -15,7 +15,7 @@ static void display_setup(doodle_app_t *app) {
 }
 
 static void display_loop(doodle_app_t *app) {
-    DOODLE_APP_LOG("loop\n");
+    // DOODLE_APP_LOG("loop\n");
     doodle_module_renderer_t *renderer = (doodle_module_renderer_t *)doodle_app_get_module(app, DOODLE_MODULE_TYPE_RENDERER);
     if (renderer) {
         doodle_color_t color = (doodle_color_t){.value = 0x00FF00FF};
