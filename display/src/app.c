@@ -12,6 +12,10 @@ static void display_setup(doodle_app_t *app) {
         doodle_color_t color = DOODLE_COLOR_BLACK;
         renderer->clear(renderer, color);
     }
+    else
+    {
+        DOODLE_APP_FATAL_ERROR("Renderer module not found\n");
+    }
 }
 
 static void display_loop(doodle_app_t *app) {
@@ -20,6 +24,10 @@ static void display_loop(doodle_app_t *app) {
     if (renderer) {
         doodle_color_t color = DOODLE_COLOR_WHITE;
         renderer->draw_pixel(renderer, 320, 240, color);
+    }
+    else
+    {
+        DOODLE_APP_FATAL_ERROR("Renderer module not found\n");
     }
 }
 
