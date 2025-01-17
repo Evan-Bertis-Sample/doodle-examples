@@ -11,6 +11,7 @@ static void display_setup(doodle_app_t *app) {
     if (renderer) {
         doodle_color_t color = DOODLE_COLOR_BLACK;
         renderer->clear(renderer, color);
+        renderer->blit_screen(renderer);
     }
     else
     {
@@ -24,6 +25,7 @@ static void display_loop(doodle_app_t *app) {
     if (renderer) {
         doodle_color_t color = DOODLE_COLOR_WHITE;
         renderer->draw_pixel(renderer, 320, 240, color);
+        renderer->blit_screen(renderer);
     }
     else
     {
